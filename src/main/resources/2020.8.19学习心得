@@ -1,0 +1,48 @@
+2020.8.19学习心得
+    今天上午主要是学习了springboot整合redis，做了一个小demo，在整合的时候，主要使用了Jedis来操作Redis，
+整合的时候还要注意设置redis键和值的序列化方式，否则可能会出现乱码的现象，下文是使用注解方式来配置redis：
+@Configuration
+public class RedisConfig {
+
+    private RedisConnectionFactory connectionFactory = null;
+
+    @Bean(name = "redisConnectionFactory")
+    public RedisConnectionFactory initConnectionFactory() {
+        if (this.connectionFactory != null) {
+            return this.connectionFactory;
+        }
+        JedisPoolConfig poolConfig = new JedisPoolConfig();
+        // 最大空闲数
+        poolConfig.setMaxIdle(50);
+        // 最大连接数
+        poolConfig.setMaxTotal(100);
+        // 最大等待毫秒数
+        poolConfig.setMaxWaitMillis(2000);
+        // 创建Jedis连接工厂
+        JedisConnectionFactory connectionFactory = new JedisConnectionFactory(poolConfig);
+        // 配置Redis连接服务器
+        RedisStandaloneConfiguration rsc = connectionFactory.getStandaloneConfiguration();
+        rsc.setHostName("127.0.0.1");
+        rsc.setPort(6379);
+        this.connectionFactory = connectionFactory;
+        return connectionFactory;
+    }
+
+    @Bean(name="redisTemplate")
+    public RedisTemplate<Object, Object> initRedisTemplate() {
+        RedisTemplate<Object, Object> redisTemplate = new RedisTemplate<>();
+        redisTemplate.setConnectionFactory(initConnectionFactory());
+        RedisSerializer<String> stringRedisSerializer = redisTemplate.getStringSerializer();
+        redisTemplate.setKeySerializer(stringRedisSerializer);
+        redisTemplate.setValueSerializer(stringRedisSerializer);
+        redisTemplate.setHashKeySerializer(stringRedisSerializer);
+        redisTemplate.setHashValueSerializer(stringRedisSerializer);
+        return redisTemplate;
+    }
+}
+
+    下午主要是对K12项目进行了解，说实话，看了代码之后没什么头绪，感觉文件特别多，而且有些东西我也没用过，
+于是看了看相关的文档，了解项目的结构和作用。总的来说，k12针对三类用户：B端（教育局、学校），C端（老师、学生、家长），
+行内用户（客户管理和经营分析），同时支持微信小程序访问和微信登录，主要采用的技术是vue+springboot+mybatis。k12提供了
+较多的功能，包括成绩查询、课表查询、缴费等，在支付过程中需要调用很多接口，同时需要BFC平台的支撑，这就是今天下午的学习
+结果，对k12的架构和功能进行了一定的了解。
