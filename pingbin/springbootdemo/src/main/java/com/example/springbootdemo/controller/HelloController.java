@@ -13,7 +13,8 @@ public class HelloController {
     @RequestMapping(value = "/time",method = RequestMethod.GET)
     public Time getTime(){
         Time time = new Time();
-        time.setTime(new Date());
+
+        time.setTime( new Date().getTime());
         return time;
     }
 }

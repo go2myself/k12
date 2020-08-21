@@ -3,13 +3,13 @@ package com.example.springbootdemo.pojo;
 import java.util.Date;
 
 public class Time {
-    private Date time;
+    private long time;
 
-    public Date getTime() {
+    public long getTime() {
         return time;
     }
 
-    public void setTime(Date time) {
+    public void setTime(long time) {
         this.time = time;
     }
 }
