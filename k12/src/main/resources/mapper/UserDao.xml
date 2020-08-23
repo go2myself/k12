@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengfan.k12.dao.UserDao">
+  <resultMap id="BaseResultMap" type="com.fengfan.k12.entity.User">
+    <result column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="age" jdbcType="VARCHAR" property="age" />
+    <association property="score" javaType="com.fengfan.k12.entity.Score">
+      <id property="uid" column="uid"/>
+      <result property="score" column="score"/>
+    </association>
+  </resultMap>
+
+  <insert id="insert" parameterType="com.fengfan.k12.entity.User" >
+    insert into user(id,name,age) values (#{id},#{name},#{age})
+  </insert>
+
+  <select id="getAll"  resultMap="BaseResultMap">
+    select id,name,age,uid,score from user join score on id=uid;
+  </select>
+
+  <select id="minScore" resultMap="BaseResultMap">
+    select id,name,age,uid,score from user join score on id=uid AND score>#{minScore}
+  </select>
+
+</mapper>
