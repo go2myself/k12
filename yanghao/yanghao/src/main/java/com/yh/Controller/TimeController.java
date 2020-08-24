@@ -12,7 +12,7 @@ import java.util.Map;
 @RequestMapping("/time")
 public class TimeController {
 
-    @GetMapping()
+    @GetMapping
     public Map<String, Long> getTime(){
         Map<String, Long> time=new HashMap<>();
 //        获取时间戳比较快的方法：1.如下。2.new Date().getTime()。
