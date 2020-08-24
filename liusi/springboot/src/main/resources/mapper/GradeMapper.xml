@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ls.mappers.GradeMapper">
+
+    <resultMap id="BaseResultMap" type="com.ls.entity.Grade">
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="uid" jdbcType="INTEGER" property="uid" />
+        <result column="score" jdbcType="DOUBLE" property="score" />
+    </resultMap>
+
+    <insert id="addGrade" parameterType="grade">
+        INSERT INTO grade (uid,score) VALUE (#{uid},#{score})
+    </insert>
+    <update id="update" parameterType="grade">
+        update grade set score=#{score} where uid=#{uid}
+    </update>
+    <select id="findByUid" parameterType="Integer" resultType="grade">
+        select *from grade where uid=#{uid}
+    </select>
+    <select id="findAll" resultType="grade">
+        select g.uid,u.name,g.score from grade g ,user u  
+    </select>
+
+</mapper>
