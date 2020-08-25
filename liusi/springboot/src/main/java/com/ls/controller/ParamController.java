@@ -28,9 +28,8 @@ public class ParamController {
         StringBuffer str1= new StringBuffer(str).reverse();
         myList.put("name",str1.toString());
         return myList;
-
     }
-    @PostMapping(value = "param/post")
+
     public Map<String, Integer> getArray(@RequestParam Integer[]  x){
         Map<String,Integer>  myList =new HashMap<>();
         Integer sum=0;

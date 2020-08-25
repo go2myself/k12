@@ -10,20 +10,23 @@ public class Users {
     private Integer age;
     private  String name;
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", age=" + age +
-                ", name='" + name + '\'' +
-                '}';
+//    @Override
+//    public String toString() {
+//        return "User{" +
+//                "id=" + id +
+//                ", age=" + age +
+//                ", name='" + name + '\'' +
+//                '}';
+//    }
+
+    public Users() {
     }
 
-    public Users(Integer id, Integer age, String name) {
-        this.id = id;
-        this.age = age;
-        this.name = name;
-    }
+//    public Users(Integer id, Integer age, String name) {
+//        this.id = id;
+//        this.age = age;
+//        this.name = name;
+//    }
 
     public Integer getId() {
         return id;

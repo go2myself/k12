@@ -1,6 +1,7 @@
 package com.ls.service.Impl;
 
 import com.ls.entity.Grade;
+import com.ls.entity.GradeVo;
 import com.ls.mappers.GradeMapper;
 import com.ls.service.GradeService;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,12 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public List<Grade> findAll() {
+    public List<GradeVo> findAll() {
         return gradeMapper.findAll();
+    }
+
+    @Override
+    public List<GradeVo> findGood(Float minScore) {
+        return gradeMapper.findGood(minScore);
     }
 }

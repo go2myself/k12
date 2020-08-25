@@ -1,8 +1,10 @@
 package com.ls.controller;
 
 import com.ls.entity.Grade;
+import com.ls.entity.GradeVo;
 import com.ls.service.GradeService;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -22,8 +24,13 @@ public class GradeController {
     private void addGrade(Grade grade){
         gradeService.addGrade(grade);
     }
-
-    List<Grade> findAll(){
-       return gradeService.findAll();
+    @RequestMapping(value = "/findAll")
+    private List<GradeVo> findAllGrade(Grade grade){
+        return gradeService.findAll();
     }
+    @RequestMapping(value = "/findGood")
+    private List<GradeVo> findGoodGrade(@RequestParam Float minScore ){
+        return gradeService.findGood(minScore);
+    }
+
 }
