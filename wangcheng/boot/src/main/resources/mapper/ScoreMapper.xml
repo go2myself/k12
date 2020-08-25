@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="abc.wuyan.mapper.ScoreMapper">
+
+    <resultMap id="scoreResultMap" type="abc.wuyan.model.NameAndScore">
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="age" jdbcType="INTEGER" property="name" />
+    </resultMap>
+    <resultMap id="recordrResultMap" type="abc.wuyan.model.ScoreRecord">
+        <result column="score" jdbcType="INTEGER" property="score" />
+        <association property="user" javaType="User" resultMap="userResultMap"></association>
+    </resultMap>
+    <insert id="insert" parameterType="scoreRecord">
+        INSERT INTO score_record (uid,score) VALUE (#{uid},#{score})
+    </insert>
+    <select id="findById" resultType="scoreRecord" parameterType="int">
+        SELECT * FROM score_record WHERE uid = #{uid}
+    </select>
+    <update id="update" parameterType="scoreRecord">
+      UPDATE  score_record set score = #{score} WHERE uid = #{uid}
+    </update>
+    <select id="findAll" resultType="nameAndScore">
+        SELECT a.name as name,b.score as score from user a JOIN  score_record b WHERE a.id = b.uid;
+    </select>
+    <select id="findAllBig" resultType="nameAndScore">
+        SELECT a.name as name,b.score as score from user a JOIN  score_record b WHERE a.id = b.uid AND b.score > #{minScore};
+    </select>
+</mapper>
