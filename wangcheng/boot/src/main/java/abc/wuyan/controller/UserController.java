@@ -17,15 +17,18 @@ import java.util.Map;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+
     @Autowired
     private UserService userService;
+
+    //添加用户
     @RequestMapping(value = "/add",method  = RequestMethod.POST)
     public Map<String,String> insert(User user) {
         Map<String,String> map = new HashMap<>();
         if (userService.insert(user))
-            map.put("message","success");
+            map.put("message","success");//添加成功
         else
-            map.put("message","fail");
+            map.put("message","fail");//添加失败
         return map;
     }
 }

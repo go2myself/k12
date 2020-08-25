@@ -14,6 +14,9 @@ import java.util.Map;
 @ResponseBody
 @Controller
 public class JsonController {
+    /**
+     * @return 返回当前unix时间戳
+     */
     @RequestMapping("/time")
     public Map<String,String> time() {
         String dateStr = Long.toString(System.currentTimeMillis()/1000L);//当前Unix时间戳
@@ -22,6 +25,11 @@ public class JsonController {
         return map;
     }
 
+    /**
+     *
+     * @param name 前端传来的姓名
+     * @return 返回姓名反转结果
+     */
     @RequestMapping("/getName")
     public Map<String,String> getName(String name) {
         String nameReverse = new StringBuilder(name).reverse().toString();
@@ -30,6 +38,10 @@ public class JsonController {
         return map;
     }
 
+    /**
+     * @param array 前端传来的数组
+     * @return 数组求和结果
+     */
     @RequestMapping(value = "/getSum",method = RequestMethod.POST)
     public Map<String,Integer> getSum(int[] array) {
         Integer sum = 0;//定义sum求和
