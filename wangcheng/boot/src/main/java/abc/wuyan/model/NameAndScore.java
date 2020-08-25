@@ -1,6 +1,7 @@
 package abc.wuyan.model;
 
 /**
+ * 辅助类，存储查询的名字和分数
  * Created by wangcheng on 2020/8/24.
  */
 public class NameAndScore {
