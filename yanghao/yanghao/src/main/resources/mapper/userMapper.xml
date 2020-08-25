@@ -5,9 +5,20 @@
 
 <mapper namespace="com.yh.Dao.UserDao">
 
-    <select id="addUser"  parameterType="user">
+    <insert id="addUser"  parameterType="user" >
         INSERT INTO user (id, name, age) VALUE
             (#{id},#{name},#{age});
+    </insert>
+    <insert id="insertOrUpdate"  parameterType="score" >
+        insert INTO score (uid, score)
+        VALUE
+            (#{uid},#{score})
+        ON DUPLICATE KEY UPDATE
+            uid= #{uid},
+            score = #{score}
+    </insert>
+    <select id="findScore" parameterType="double" resultType="map">
+        SELECT b.score,a.name from user a join score b on a.id=b.uid and b.score > #{minScore}
     </select>
 
 </mapper>

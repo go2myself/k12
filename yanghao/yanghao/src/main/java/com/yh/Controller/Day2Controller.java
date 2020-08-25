@@ -20,26 +20,40 @@ public class Day2Controller {
 
     /**
      * test
+     *
      * @return
      */
     @GetMapping("/hello")
-    public String hello(){
+    public String hello() {
         return "hello world";
     }
 
     /**
      * 反转字符串
+     *
      * @param name
      * @return
      */
 
-    @GetMapping("{name}")
-    public Map<String, String> ConverseName(@PathVariable("name") String name){
+    @GetMapping("/name")
+    public Map<String, String> ConverseName(@RequestBody String name) {
         Map<String, String> map = new HashMap<String, String>();
-        String res=day2Service.converseName(name);
-        map.put("name",res);
+        String res = day2Service.converseName(name);
+        map.put("name", res);
         return map;
     }
+
+    @PostMapping("/sum")
+    public Map sum(@RequestBody int[] x) {
+        Map<String, Integer> map = new HashMap<String, Integer>();
+        int sum = 0;
+        for (int aX : x) {
+            sum += aX;
+        }
+        map.put("sum", sum);
+        return map;
+    }
+
 
 //    @PostMapping("/sum")
 //    public String sum(@RequestBody String array){
@@ -66,14 +80,5 @@ public class Day2Controller {
 //        return res.toJSONString();
 //    }
 
-    @PostMapping("/sum")
-    public Map sum(@RequestBody int[] x){
-        Map<String, Integer> map = new HashMap<String, Integer>();
-        int sum=0;
-        for (int aX : x) {
-            sum += aX;
-        }
-        map.put("sum",sum);
-        return map;
-    }
+
 }
