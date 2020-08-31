@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yh.Dao.UserDao">
+
+    <insert id="addUser" parameterType="user">
+        INSERT INTO user (id, name, age) VALUE
+            (#{id}, #{name}, #{age});
+    </insert>
+    <insert id="insertOrUpdate" parameterType="score">
+        insert INTO score (uid, score)
+            VALUE
+            (#{uid}, #{score})
+        ON DUPLICATE KEY UPDATE
+            uid   = #{uid},
+            score = #{score}
+    </insert>
+    <select id="findScore" parameterType="double" resultType="map">
+        SELECT
+            b.score,
+            a.name
+        from user a
+            join score b on a.id = b.uid and b.score > #{minScore}
+    </select>
+
+</mapper>
