@@ -4,9 +4,7 @@ import com.ls.entity.Users;
 import com.ls.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,7 +18,8 @@ import javax.annotation.Resource;
 public class UserController {
     @Resource
     private UserService userService;
-    @RequestMapping(value = "/add")
+
+    @PostMapping (value = "/add")
     private void addUser(Users user){
        userService.addUser( user);
     }

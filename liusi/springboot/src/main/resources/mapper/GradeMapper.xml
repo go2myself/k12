@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ls.mappers.GradeMapper">
+    <!-- resultMap最终还是要将结果映射到pojo上，type就是指定映射到哪一个pojo -->
+    <!-- id：设置ResultMap的id -->
+<!--    <resultMap id="userGradeResultMap" type="com.ls.entity.GradeVo">-->
+<!--        <id column="id"  property="id" />-->
+<!--        <result column="uid"  property="uid" />-->
+<!--        <result column="score"  property="score" />-->
+<!--        &lt;!&ndash; property="user"一定要和实体类得定义保持一致。当改为users 将报错&ndash;&gt;-->
+<!--       <association property="user" javaType="com.ls.entity.Users">-->
+<!--            <id column="id"  property="id"/>-->
+<!--            <result column="name" property="name"></result>-->
+<!--            <result column="age"  property="age"></result>-->
+<!--        </association>-->
 
-    <resultMap id="BaseResultMap" type="com.ls.entity.Grade">
-        <result column="id" jdbcType="INTEGER" property="id" />
-        <result column="uid" jdbcType="INTEGER" property="uid" />
-        <result column="score" jdbcType="DOUBLE" property="score" />
-    </resultMap>
-
+<!--    </resultMap>-->
+    <!-- 配置一对多的关系
+         property：填写pojo类中集合类类属性的名称
+         javaType：填写集合类型的名称-->
     <insert id="addGrade" parameterType="grade">
         INSERT INTO grade (uid,score) VALUE (#{uid},#{score})
     </insert>
@@ -15,10 +25,18 @@
         update grade set score=#{score} where uid=#{uid}
     </update>
     <select id="findByUid" parameterType="Integer" resultType="grade">
-        select *from grade where uid=#{uid}
+        select * from grade where uid=#{uid}
     </select>
-    <select id="findAll" resultType="grade">
-        select g.uid,u.name,g.score from grade g ,user u  
-    </select>
+<!--    方法一-->
+        <select id="findAll" resultType="GradeVo" >
+            select g.id,g.uid,g.score,u.name ,u.age from grade g inner join user u on u.id=g.uid;
+        </select>
+<!--    方法二-->
+<!--    <select id="findAll" resultMap="userGradeResultMap">-->
+<!--       select g.id,g.uid,user.name ,user.age,user.id,g.score from grade g  join user  on user.id=g.uid-->
+<!--    </select>-->
 
+    <select id="findGood" resultType="GradeVo" >
+            select g.id,g.uid,g.score,u.name ,u.age from grade g , user u where u.id=g.uid and g.score>#{minScore};
+        </select>
 </mapper>
